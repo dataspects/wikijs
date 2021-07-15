@@ -1,0 +1,25 @@
+version: "3.7"
+services:
+    wiki:
+        image: requarks/wiki:2.5
+        container_name: wikijs
+        environment: 
+            - "DB_TYPE=postgres"
+            - "DB_HOST=db"
+            - "DB_PORT=5432"
+            - "DB_USER=wikijs"
+            - "DB_PASS=wikijsrocks"
+            - "DB_NAME=wikijs"
+        ports:
+            - 3000:3000
+        depends_on:
+            - "db"
+    db:
+        image: postgres:9.6.22
+        container_name: postgresdb
+        environment:
+            - "POSTGRES_USER=wikijs"
+            - "POSTGRES_PASSWORD=wikijsrocks"
+            - "POSTGRES_DB=wikijs"
+        volumes:
+            - "./postgresql/data:/var/lib/postgresql/data"
